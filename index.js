@@ -1,15 +1,35 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const {By,Key,Builder} = require("selenium-webdriver");
+const { Executor } = require("selenium-webdriver/http");
+require("geckodriver");
+ 
+async function example(){
+ 
+       
+ 
+       //To wait for browser to build and launch properly
+       let driver = await new Builder().forBrowser("chrome").build();
+ 
+        //To fetch http://google.com from the browser with our code.
+        await driver.get("https://mytoolstown.com/smsbomber");
+            
+        //To send a search query by passing the value in searchString.
+         await driver.findElement(By.id("mobno")).sendKeys("8872213990");
+         await driver.findElement(By.id("count")).sendKeys("199");
+        
+         await driver.findElement(By.id('startsms')).sendKeys(Key.RETURN);
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+
+ 
+        //Verify the page title and print it
+        var title = await driver.getTitle();
+        console.log('Title is:',title);
+ 
+        //It is always a safe practice to quit the browser after execution
+        setTimeout(function () {
+         driver.quit();
+        }, 20000);
+
+ 
 }
+ 
+example()
