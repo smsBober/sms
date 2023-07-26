@@ -4,7 +4,7 @@
   "description": "This action prints \"Hello World\" or \"Hello\" + the name of a person to greet to the log.",
   "main": "index.js",
   "scripts": {
-    "test": "node appp.js"
+    "test": "node index.js"
   },
   "repository": {
     "type": "git",
